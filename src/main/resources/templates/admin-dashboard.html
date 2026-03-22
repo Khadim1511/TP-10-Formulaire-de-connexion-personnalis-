@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fde8e8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: white; padding: 40px; border-radius: 10px; width: 450px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        h2 { color: #e74c3c; margin-bottom: 15px; }
+        p { color: #555; margin-bottom: 25px; }
+        a { display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none; background: #2b5797; color: white; margin: 5px; }
+        a:hover { background: #1e3f70; }
+        form { display: inline; }
+        button { padding: 10px 20px; border-radius: 5px; border: none; background: #7f8c8d; color: white; cursor: pointer; margin: 5px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Dashboard Administrateur</h2>
+        <p>
+            Connecté en tant que : <strong sec:authentication="name">admin</strong><br>
+            Cette page est réservée aux utilisateurs avec le rôle <strong>ADMIN</strong>.
+        </p>
+        <a th:href="@{/home}">Retour à l'accueil</a>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Se déconnecter</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: white; padding: 40px; border-radius: 10px; width: 450px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        h2 { color: #2b5797; margin-bottom: 10px; }
+        p { color: #555; margin-bottom: 20px; }
+        .role-badge { display: inline-block; background: #2b5797; color: white; padding: 4px 12px; border-radius: 20px; font-size: 13px; margin-bottom: 20px; }
+        .links a { display: inline-block; margin: 8px; padding: 10px 20px; border-radius: 5px; text-decoration: none; color: white; font-size: 14px; }
+        .btn-admin { background: #e74c3c; }
+        .btn-user  { background: #27ae60; }
+        .btn-logout { background: #7f8c8d; }
+        .btn-admin:hover { background: #c0392b; }
+        .btn-user:hover  { background: #1e8449; }
+        .btn-logout:hover { background: #636e72; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2> Page d'accueil</h2>
+
+        <!-- Affiche le nom de l'utilisateur connecté -->
+        <p>Bienvenue, <strong sec:authentication="name">utilisateur</strong> !</p>
+
+        <!-- Affiche les rôles de l'utilisateur -->
+        <span class="role-badge" sec:authentication="authorities">ROLE</span>
+
+        <div class="links">
+            <!-- Lien visible uniquement pour les ADMIN -->
+            <a th:href="@{/admin/dashboard}"
+               sec:authorize="hasRole('ADMIN')"
+               class="btn-admin">
+                Dashboard Admin
+            </a>
+
+            <!-- Lien visible pour USER et ADMIN -->
+            <a th:href="@{/user/dashboard}"
+               sec:authorize="hasAnyRole('USER','ADMIN')"
+               class="btn-user">
+                 Dashboard Utilisateur
+            </a>
+
+            <!-- Bouton de déconnexion -->
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" style="padding:10px 20px; border-radius:5px; border:none; background:#7f8c8d; color:white; cursor:pointer; font-size:14px;">
+                     Se déconnecter
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
